@@ -10,7 +10,7 @@ const generateToken = (userId) => {
 };
 
 // POST /api/auth/register
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
 
@@ -32,11 +32,8 @@ export const register = async (req, res) => {
         role: user.role,
       },
     });
-  } catch (error) {
-    res.status(500).json({
-      message: "Registration failed",
-      error: error.message,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -73,7 +70,7 @@ export const login = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Login failed", error: err.message });
+    next(err);
   }
 };
 
@@ -83,8 +80,6 @@ export const getMe = async (req, res) => {
     const user = await User.findById(req.user.id);
     res.status(200).json({ user });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Could not fetch user", error: err.message });
+    next(err);
   }
 };
