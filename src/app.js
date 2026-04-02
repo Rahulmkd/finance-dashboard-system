@@ -1,6 +1,8 @@
 import express from "express";
 import authRoutes from "./routes/auth.routes.js";
+import transactionRoutes from "./routes/transaction.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
+
 // Initialize express app
 const app = express();
 app.use(express.json());
@@ -11,6 +13,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 // 404 handler — for undefined routes
 app.use((req, res) => {
