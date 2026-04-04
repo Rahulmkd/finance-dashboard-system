@@ -83,7 +83,7 @@ finance-backend/
 ```bash
 # 1. Clone the repository
 git clone https://github.com/Rahulmkd/finance-dashboard-system
-cd finance-backend
+cd finance-dashboard-system
 
 # 2. Install dependencies
 npm install

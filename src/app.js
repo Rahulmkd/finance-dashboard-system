@@ -9,6 +9,7 @@ import { errorHandler } from "./middleware/error.middleware.js";
 
 // Initialize express app
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 
 // ─── RATE LIMITING ─────────────────────────────────────────
 const limiter = rateLimit({
