@@ -20,7 +20,6 @@ A role-based finance data management system built with **Node.js**, **Express**,
 - [Error Handling](#error-handling)
 - [Design Decisions](#design-decisions)
 - [Assumptions](#assumptions)
-- [What I Would Add Next](#what-i-would-add-next)
 
 ---
 
@@ -83,7 +82,7 @@ finance-backend/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/finance-backend.git
+git clone https://github.com/Rahulmkd/finance-dashboard-system
 cd finance-backend
 
 # 2. Install dependencies

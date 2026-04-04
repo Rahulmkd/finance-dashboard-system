@@ -1,5 +1,19 @@
 import { body, param, validationResult } from "express-validator";
 
+// ─── VALIDATORS ────────────────────────────────────────────
+export const registerValidator = [
+  body("name").notEmpty().withMessage("Name is required"),
+  body("email").isEmail().withMessage("Valid email required"),
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters"),
+];
+
+export const loginValidator = [
+  body("email").isEmail(),
+  body("password").notEmpty(),
+];
+
 // Middleware to check validation results
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
@@ -51,7 +65,9 @@ export const transactionRules = [
       "education",
       "other",
     ])
-    .withMessage("Invalid category"),
+    .withMessage(
+      "Invalid category. Allowed categories: salary, freelance, investment, food, transport, utilities, health, entertainment, education, other.",
+    ),
 
   body("date")
     .optional()
@@ -96,7 +112,9 @@ export const transactionUpdateRules = [
       "education",
       "other",
     ])
-    .withMessage("Invalid category"),
+    .withMessage(
+      "Invalid category. Allowed categories: salary, freelance, investment, food, transport, utilities, health, entertainment, education, other.",
+    ),
 
   body("date")
     .optional()

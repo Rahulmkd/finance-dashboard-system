@@ -8,25 +8,28 @@ const userSchema = new mongoose.Schema(
       required: [true, "Name is required"],
       trim: true,
     },
+
     email: {
       type: String,
       required: [true, "Email is required"],
       unique: true,
       lowercase: true,
-      match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
       trim: true,
+      match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
     },
 
     password: {
       type: String,
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
-      select: false, // never returned in queries by default
+      select: false,
     },
+
     role: {
       type: String,
       enum: ["viewer", "analyst", "admin"],
       default: "viewer",
+      immutable: true, // prevents role tampering
     },
 
     isActive: {
@@ -37,13 +40,18 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Hase password before saving
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return;
-  this.password = await bcrypt.hash(this.password, 12);
+// ─── HASH PASSWORD ─────────────────────────────────────────
+userSchema.pre("save", async function (next) {
+  try {
+    if (!this.isModified("password")) return;
+
+    this.password = await bcrypt.hash(this.password, 12);
+  } catch (err) {
+    next(err);
+  }
 });
 
-// Instance method to compare passwords
+// ─── COMPARE PASSWORD ──────────────────────────────────────
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

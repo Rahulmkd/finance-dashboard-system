@@ -198,7 +198,7 @@ export const getMonthlyTrends = async (req, res, next) => {
         expenses: expense?.total ?? 0,
         expenseCount: expense?.count ?? 0,
         net: parseFloat(
-          (income?.total ?? 0) - (expense?.total ?? 0).toFixed(2),
+          ((income?.total ?? 0) - (expense?.total ?? 0)).toFixed(2),
         ),
       };
     });

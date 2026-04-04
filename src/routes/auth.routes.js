@@ -4,19 +4,23 @@ import { changePassword } from "../controllers/user.controller.js";
 import { protect } from "../middleware/auth.middleware.js";
 import { authorize } from "../middleware/rbac.middleware.js";
 import { CAN_ANALYZE, CAN_MANAGE } from "../constants/roles.js";
+import {
+  loginValidator,
+  registerValidator,
+} from "../middleware/validate.middleware.js";
 
 const router = express.Router();
 
-// Public routes
-router.post("/register", register);
-router.post("/login", login);
+// ─── PUBLIC ROUTES ─────────────────────────────────────────
+router.post("/register", registerValidator, register);
+router.post("/login", loginValidator, login);
 
-// Protected routes
-router.get("/me", protect, getMe); 
+// ─── PROTECTED ROUTES ──────────────────────────────────────
+router.get("/me", protect, getMe);
 
 router.patch("/change-password", protect, changePassword);
 
-// RBAC test routes
+// ─── RBAC TEST (OPTIONAL) ──────────────────────────────────
 router.get("/admin-only", protect, authorize(...CAN_MANAGE), (req, res) => {
   res.json({ message: `Welcome Admin ${req.user.name}` });
 });

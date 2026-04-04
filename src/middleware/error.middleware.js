@@ -32,7 +32,7 @@ export const errorHandler = (err, req, res, next) => {
   }
 
   // Default fallback
-  res.status(err.statusCode || 500).json({
+  return res.status(err.statusCode || 500).json({
     message:
       process.env.NODE_ENV === "production"
         ? "Internal server error"
