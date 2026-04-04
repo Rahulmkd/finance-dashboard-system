@@ -125,14 +125,16 @@ export const updateUser = async (req, res, next) => {
 // Access: Admin only (cannot target self)
 export const deactivateUser = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id, isActive: true },
       { isActive: false },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(400).json({
+        message: "User not found or already deactivated",
+      });
     }
 
     res.status(200).json({ message: `User ${user.name} has been deactivated` });

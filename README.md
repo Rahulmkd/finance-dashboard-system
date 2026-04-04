@@ -719,20 +719,3 @@ The password field is excluded from all queries by default at the schema level. 
 5. **No email verification** — User registration immediately activates the account. A production system would send a verification email before activation.
 
 ---
-
-## What I Would Add Next
-
-Given more time or a production context, these would be the natural next improvements:
-
-| Feature                                  | Reason                                                      |
-| ---------------------------------------- | ----------------------------------------------------------- |
-| **Rate limiting** (`express-rate-limit`) | Protect auth endpoints from brute-force attacks             |
-| **Request logging** (`morgan`)           | Audit trail for all incoming requests                       |
-| **Helmet.js**                            | Security headers (XSS, CSRF protection)                     |
-| **Refresh tokens**                       | Current JWTs are stateless; refresh tokens allow revocation |
-| **Transaction restore endpoint**         | Allow admins to un-delete soft-deleted records              |
-| **Unit + integration tests**             | Jest + Supertest for controller and route coverage          |
-| **API documentation**                    | Swagger/OpenAPI spec auto-generated from routes             |
-| **Search**                               | Full-text search on transaction title and notes             |
-| **Export**                               | CSV/PDF export of filtered transaction sets                 |
-| **Audit log**                            | Track who changed what and when on critical records         |

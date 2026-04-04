@@ -2,11 +2,11 @@ import { body, param, validationResult } from "express-validator";
 
 // Middleware to check validation results
 export const validate = (req, res, next) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
     return res.status(400).json({
-      message: "validation failed",
-      error: error.array().map((e) => ({
+      message: "Validation failed",
+      errors: errors.array().map((e) => ({
         field: e.path,
         message: e.msg,
       })),
