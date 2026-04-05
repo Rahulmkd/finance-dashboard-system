@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["viewer", "analyst", "admin"],
       default: "viewer",
-      immutable: true, // prevents role tampering
     },
 
     isActive: {

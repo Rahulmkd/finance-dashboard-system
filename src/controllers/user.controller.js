@@ -91,6 +91,7 @@ export const updateUser = async (req, res, next) => {
   try {
     const allowedFields = ["name", "role", "isActive"];
     const updates = {};
+    
 
     allowedFields.forEach((field) => {
       if (req.body[field] !== undefined) updates[field] = req.body[field];
@@ -103,7 +104,7 @@ export const updateUser = async (req, res, next) => {
     }
 
     const user = await User.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     }).select("-__v");
 

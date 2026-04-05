@@ -3,7 +3,7 @@
 
 export const authorize = (...allowedRoles) => {
   return (req, res, next) => {
-    // protect middleware must run before this — req.user must exist
+   
     if (!req.user) {
       return res.status(401).json({ message: "Authentication required" });
     }
